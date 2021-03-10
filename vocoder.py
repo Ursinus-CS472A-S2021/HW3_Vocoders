@@ -339,8 +339,9 @@ def im2sound(impath, w, h, win_fn, n_iters):
     X = np.flipud(rgb2gray(skimage.io.imread(impath)))
     nwin = X.shape[1]
     S = np.zeros((w, nwin))
-    ## TODO: Fill in the spectrogram with the image X
-    ## and its mirror image so that the inverse will be real
+    S[0, :] = X[0, :]
+    S[1:X.shape[0], :] = X[1::, :]
+    S[-1:-X.shape[0]:-1, :] = X[1::, :]
     plt.figure(figsize=(8, 8))
     plt.imshow(S, aspect='auto', cmap='magma_r')
     plt.gca().invert_yaxis()
